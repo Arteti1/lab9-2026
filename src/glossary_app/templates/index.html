@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="card">
+    <form action="{{ url_for('index') }}" method="get" class="search-bar">
+        <input type="text" name="q" value="{{ query }}" placeholder="Пошук за назвою або визначенням...">
+        <select name="category">
+            <option value="">Усі категорії</option>
+            {% for cat in categories %}
+                <option value="{{ cat }}" {% if cat == selected_category %}selected{% endif %}>{{ cat }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn">Знайти</button>
+        {% if query or selected_category %}
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Скинути</a>
+        {% endif %}
+    </form>
+</section>
+
+<section class="card">
+    <h2 style="margin-top:0;">Додати новий термін</h2>
+    <form action="{{ url_for('add_term') }}" method="post">
+        <div class="form-grid">
+            <div>
+                <label>Назва терміна *</label>
+                <input type="text" name="term" required placeholder="Наприклад: Поліморфізм">
+            </div>
+            <div>
+                <label>Категорія</label>
+                <input type="text" name="category" placeholder="Наприклад: ООП">
+            </div>
+        </div>
+        <div style="margin-bottom:12px;">
+            <label>Визначення *</label>
+            <textarea name="definition" rows="3" required placeholder="Введіть чітке тлумачення терміна..."></textarea>
+        </div>
+        <div style="margin-bottom:14px;">
+            <label>Приклад використання (необов'язково)</label>
+            <input type="text" name="example" placeholder="Короткий приклад з практики або коду">
+        </div>
+        <button type="submit" class="btn">Додати термін</button>
+    </form>
+</section>
+
+<section>
+    {% if terms %}
+        {% for item in terms %}
+            <article class="card">
+                <div class="term-header">
+                    <h3 class="term-title">{{ item.term }}</h3>
+                    <span class="badge">{{ item.category }}</span>
+                </div>
+                <p style="margin:10px 0 0;">{{ item.definition }}</p>
+                {% if item.example %}
+                    <div class="example-box">
+                        <strong>Приклад:</strong> {{ item.example }}
+                    </div>
+                {% endif %}
+                <div class="actions">
+                    <a href="{{ url_for('edit_term', term_id=item.id) }}" class="btn btn-secondary">Редагувати</a>
+                    <form action="{{ url_for('delete_term', term_id=item.id) }}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Видалити</button>
+                    </form>
+                </div>
+            </article>
+        {% endfor %}
+    {% else %}
+        <div class="card" style="text-align:center;color:#64748b;">
+            За вашим запитом термінів не знайдено.
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

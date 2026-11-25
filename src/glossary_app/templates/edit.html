@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Редагування — {{ item.term }}{% endblock %}
+
+{% block content %}
+<section class="card">
+    <h2 style="margin-top:0;">Редагування терміна «{{ item.term }}»</h2>
+    <form action="{{ url_for('edit_term', term_id=item.id) }}" method="post">
+        <div class="form-grid">
+            <div>
+                <label>Назва терміна *</label>
+                <input type="text" name="term" value="{{ item.term }}" required>
+            </div>
+            <div>
+                <label>Категорія</label>
+                <input type="text" name="category" value="{{ item.category }}">
+            </div>
+        </div>
+        <div style="margin-bottom:12px;">
+            <label>Визначення *</label>
+            <textarea name="definition" rows="4" required>{{ item.definition }}</textarea>
+        </div>
+        <div style="margin-bottom:14px;">
+            <label>Приклад використання</label>
+            <input type="text" name="example" value="{{ item.example }}">
+        </div>
+        <div class="actions">
+            <button type="submit" class="btn">Зберегти зміни</button>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Скасувати</a>
+        </div>
+    </form>
+</section>
+{% endblock %}

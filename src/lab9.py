@@ -1,58 +1,33 @@
 # -*- coding: utf-8 -*-
-
 """
-Інформаційний скрипт для Лабораторної роботи №9.
-
-Цей файл не запускає веб-додаток безпосередньо.
-Він надає інструкції, як запустити приклади для Flask та Django.
-
-Будь ласка, дотримуйтесь інструкцій нижче.
+Лабораторна робота № 9: Інструкції та запуск веб-додатку Варіанту 11 («Словник термінів»).
+Студент: Фесюк Максим Ігорович (КН-25-2)
 """
-
-import os
-
-def print_instructions():
-    """
-    Виводить інструкції для запуску прикладів Flask та Django.
-    """
-    flask_example_path = "flask_example"
-    django_example_path = "django_example"
-
-    print("="*80)
-    print("Лабораторна робота № 9: Інструкції для запуску прикладів")
-    print("="*80)
-    print("\nЦей репозиторій містить два приклади веб-додатків: один на Flask, інший на Django.")
-    print("Ви можете знайти їх у відповідних директоріях.\n")
-
-    # --- Інструкції для Flask ---
-    print("-" * 30 + " Flask Example " + "-" * 31)
-    print(f"Приклад знаходиться в директорії: {flask_example_path}/\n")
-    print("Щоб запустити його, виконайте наступні команди з директорії 'src':\n")
-    print(f"1. Перейдіть до директорії з прикладом:")
-    print(f"   cd {flask_example_path}\n")
-    print(f"2. Запустіть додаток:")
-    print(f"   python app.py\n")
-    print("Після запуску, додаток буде доступний за адресою: http://127.0.0.1:5000\n")
-
-    # --- Інструкції для Django ---
-    print("-" * 30 + " Django Example " + "-" * 30)
-    print(f"Приклад знаходиться в директорії: {django_example_path}/\n")
-    print("Щоб запустити його, виконайте наступні команди з директорії 'src':\n")
-    print(f"1. Перейдіть до директорії з прикладом:")
-    print(f"   cd {django_example_path}\n")
-    print(f"2. Застосуйте міграції бази даних (це потрібно зробити один раз):")
-    print(f"   python manage.py migrate\n")
-    print(f"3. Запустіть сервер для розробки:")
-    print(f"   python manage.py runserver\n")
-    print("Після запуску, додаток буде доступний за адресою: http://127.0.0.1:8000\n")
-    print("="*80)
+import sys
 
 
-if __name__ == '__main__':
-    # Перевіряємо, чи скрипт запускається з директорії `src`
-    current_dir = os.path.basename(os.getcwd())
-    if current_dir != 'src':
-        print(f"\n[ПОПЕРЕДЖЕННЯ] Будь ласка, запустіть цей скрипт з директорії 'src', щоб шляхи були правильними.")
-        print(f"Поточна директорія: {os.getcwd()}\n")
+def print_instructions() -> None:
+    """Виводить інструкції для запуску веб-додатку Варіанту 11 та навчальних прикладів."""
+    print("=" * 80)
+    print("Лабораторна робота № 9 (Варіант 11): Веб-додаток «Словник термінів» (Flask)")
+    print("=" * 80)
+    print("\nОсновний реалізований проєкт знаходиться у директорії: src/glossary_app/\n")
+    print("Щоб запустити веб-додаток «Словник термінів», виконайте з кореня репозиторію:")
+    print("   python src/glossary_app/app.py")
+    print("або:")
+    print("   python src/lab9.py --run\n")
+    print("Після запуску відкрийте у браузері: http://127.0.0.1:5000\n")
 
-    print_instructions()
+    print("-" * 26 + " Навчальні приклади шаблону " + "-" * 26)
+    print("1. Flask Example:  cd src/flask_example  && python app.py")
+    print("2. Django Example: cd src/django_example && python manage.py migrate && python manage.py runserver")
+    print("=" * 80)
+
+
+if __name__ == "__main__":
+    if "--run" in sys.argv:
+        from glossary_app.app import app
+
+        app.run(debug=True)
+    else:
+        print_instructions()
